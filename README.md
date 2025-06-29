@@ -33,6 +33,30 @@ The main function `hopso()` implements the HOPSO algorithm with the following pa
 - `e_min`, `vectors`, `velocities`, `vel_mag`, `gbest`, `amps`, `pos`: Output parameters to store results
 - `max_iterations`: Maximum number of iterations (default: 1000)
 
+## HOPSO with Periodicity for Quantum Systems
+
+For quantum systems and other inherently periodic problems, use `hopso_periodicity.py` instead of the standard implementation. This version includes:
+
+- **Periodic boundary handling**: Properly manages periodic search spaces using modular arithmetic
+- **Immediate particle updates**: Each particle updates its attractor/amplitude/theta immediately after finding a better personal best
+- **Enhanced convergence**: Swarm-wide updates when global best changes, ensuring better coordination
+- **Particle management**: Includes mechanisms to handle invalid particle states during optimization
+
+**When to use the periodicity version:**
+- Quantum system optimization (e.g., quantum circuit parameters, phase optimization)
+- Any optimization problem with periodic variables (angles, phases, etc.)
+- Problems where the search space has periodic boundary conditions
+
+The periodicity version has the same function signature as the standard HOPSO but with enhanced handling for periodic variables:
+
+```python
+from hopso_periodicity import hopso
+
+# Same usage as standard HOPSO, but optimized for periodic systems
+hopso(cost_fn, hp, num_particles, runs, dimension, max_cut, 
+      e_min, vectors, velocities, vel_mag, gbest, max_iterations=500)
+```
+
 ## Usage
 
 To use the HOPSO optimizer, you need to:
@@ -40,7 +64,7 @@ To use the HOPSO optimizer, you need to:
 1. Define your cost function
 2. Set up the hyperparameters
 3. Initialize the output variables
-4. Call the `hopso()` function
+4. Call the `hopso()` function (or `hopso_periodicity.hopso()` for quantum/periodic systems)
 
 Example:
 ```python
